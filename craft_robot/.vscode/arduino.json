@@ -1,0 +1,4 @@
+{
+    "board": "arduino:avr:uno",
+    "sketch": "sketch/L298N_pwm/L298N_pwm.ino"
+}
