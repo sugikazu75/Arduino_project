@@ -12,6 +12,13 @@ drone_motor FL_motor(FL_motor_pin);
 drone_motor BR_motor(BR_motor_pin);
 drone_motor BL_motor(BL_motor_pin);
 
+int takeoff_flag = 0;
+int tmp_cnt = 0;
+
+void takeoff(){
+    Serial.println("launch");
+}
+
 void setup(){
     Serial.begin(115200);
     while (!Serial) delay(10);
@@ -24,6 +31,39 @@ void setup(){
         delay(1000);
     }
     Serial.println("ds4 connected!");
+
+    while(true){
+        if(PS4.Left() && PS4.Circle()){
+            tmp_cnt = 0;
+            Serial.println("unlocked");
+            FR_motor.set_speed(50);
+            FL_motor.set_speed(50);
+            BR_motor.set_speed(50);
+            BL_motor.set_speed(50);
+            delay(50);
+            while(true){
+                if(PS4.Up() && PS4.Triangle()){
+                    Serial.println("take off");
+                    takeoff();
+                    takeoff_flag = 1;
+                    break;
+                }
+                delay(50);
+                tmp_cnt++;
+                if(tmp_cnt % 20 == 0){
+                    Serial.println("waiting takeoff");
+                    tmp_cnt = 0;
+                }
+            }
+        }
+        delay(50);
+        tmp_cnt++;
+        if(takeoff_flag) break;
+        if(tmp_cnt % 20 == 0){
+            Serial.println("waiting for unlocking");
+            tmp_cnt = 0;
+        }
+    }
 }
 
 int R2_button=0;
