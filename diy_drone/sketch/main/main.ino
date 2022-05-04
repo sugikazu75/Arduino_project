@@ -9,7 +9,7 @@ float ROLL, PITCH, YAW;
 
 //select pwm_pin
 const int FR_motor_pin = 2;
-const int FL_motor_pin = 17;
+const int FL_motor_pin = 23;
 const int BR_motor_pin = 26;
 const int BL_motor_pin = 32;
 
@@ -110,4 +110,3 @@ void mpu6050_calibration(){
     delay(50);
   }
 }
-
